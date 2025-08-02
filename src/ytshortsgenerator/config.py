@@ -5,8 +5,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 @dataclass
-class Config:
+class Settings:
 	reddit_client_id: str = os.getenv("REDDIT_CLIENT_ID")
 	reddit_client_secret: str = os.getenv("REDDIT_CLIENT_SECRET")
+	reddit_user_agent: str = os.getenv("REDDIT_USER_AGENT", "ytshortsgenerator/0.1")
 
-config = Config()
+settings = Settings()
