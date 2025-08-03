@@ -1,5 +1,5 @@
-from ytshortsgenerator.config import settings
 from pathlib import Path
+from ytshortsgenerator.config import settings
 
 
 class VideoProcessor:
@@ -10,6 +10,7 @@ class VideoProcessor:
         audio_codec: str = "aac",
         pixel_fmt: str = "yuv420p",
         shortest: bool = True,
+        font_path: Path = settings.font_path,
     ) -> None:
         self.ffmpeg_path = ffmpeg_path
         self.default_codec = default_codec

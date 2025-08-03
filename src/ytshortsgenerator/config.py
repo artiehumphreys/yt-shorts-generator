@@ -12,6 +12,7 @@ class Settings:
     download_dir: Path = base_dir / "downloads"
     video_download_dir: Path = download_dir / "videos"
     audio_output_dir: Path = download_dir / "audio"
+    font_dor: Path = base_dir / "fonts"
 
     reddit_client_id: str | None = os.getenv("REDDIT_CLIENT_ID")
     reddit_client_secret: str | None = os.getenv("REDDIT_CLIENT_SECRET")
