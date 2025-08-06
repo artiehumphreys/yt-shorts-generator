@@ -1,6 +1,6 @@
-from dataclasses import dataclass
 import os
 from pathlib import Path
+from dataclasses import dataclass
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -16,20 +16,48 @@ class Settings:
     font: str = "BubblegumSans-Regular.ttf"
     font_path: Path = base_dir / "fonts" / font
 
-    reddit_client_id: str | None = os.getenv("REDDIT_CLIENT_ID")
-    reddit_client_secret: str | None = os.getenv("REDDIT_CLIENT_SECRET")
-    reddit_user_agent: str = os.getenv("REDDIT_USER_AGENT", "ytshortsgenerator/0.1")
-
-    elevenlabs_api_key: str | None = os.getenv("ELEVENLABS_API_KEY")
-
-    youtube_client_id: str | None = os.getenv("YOUTUBE_OAUTH_CLIENT_ID")
-    youtube_client_secret: str | None = os.getenv("YOUTUBE_OAUTH_CLIENT_SECRET")
-
     def __post_init__(self):
-        self.download_dir.mkdir(parents=True, exist_ok=True)
-        self.video_download_dir.mkdir(parents=True, exist_ok=True)
-        self.audio_output_dir.mkdir(parents=True, exist_ok=True)
-        self.result_dir.mkdir(parents=True, exist_ok=True)
+        for d in (
+            self.download_dir,
+            self.video_download_dir,
+            self.audio_output_dir,
+            self.result_dir,
+        ):
+            d.mkdir(parents=True, exist_ok=True)
+
+    @property
+    def reddit_client_id(self) -> str | None:
+        return os.getenv("REDDIT_CLIENT_ID")
+
+    @property
+    def reddit_client_secret(self) -> str | None:
+        return os.getenv("REDDIT_CLIENT_SECRET")
+
+    @property
+    def reddit_user_agent(self) -> str:
+        return os.getenv("REDDIT_USER_AGENT", "ytshortsgenerator/0.1")
+
+    @property
+    def elevenlabs_api_key(self) -> str | None:
+        return os.getenv("ELEVENLABS_API_KEY")
+
+    @property
+    def youtube_client_id(self) -> str | None:
+        return os.getenv("YOUTUBE_OAUTH_CLIENT_ID")
+
+    @property
+    def youtube_client_secret(self) -> str | None:
+        return os.getenv("YOUTUBE_OAUTH_CLIENT_SECRET")
 
 
-settings = Settings()
+_settings: Settings | None = None
+
+
+def get_settings() -> Settings:
+    global _settings
+    if _settings is None:
+        _settings = Settings()
+    return _settings
+
+
+settings = get_settings()
