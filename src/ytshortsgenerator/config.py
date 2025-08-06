@@ -9,10 +9,12 @@ load_dotenv()
 @dataclass
 class Settings:
     base_dir: Path = Path(__file__).resolve().parents[2]
+    result_dir: Path = base_dir / "output"
     download_dir: Path = base_dir / "downloads"
     video_download_dir: Path = download_dir / "videos"
     audio_output_dir: Path = download_dir / "audio"
-    font_dor: Path = base_dir / "fonts"
+    font: str = "BubblegumSans-Regular.ttf"
+    font_path: Path = base_dir / "fonts" / font
 
     reddit_client_id: str | None = os.getenv("REDDIT_CLIENT_ID")
     reddit_client_secret: str | None = os.getenv("REDDIT_CLIENT_SECRET")
@@ -27,6 +29,7 @@ class Settings:
         self.download_dir.mkdir(parents=True, exist_ok=True)
         self.video_download_dir.mkdir(parents=True, exist_ok=True)
         self.audio_output_dir.mkdir(parents=True, exist_ok=True)
+        self.result_dir.mkdir(parents=True, exist_ok=True)
 
 
 settings = Settings()

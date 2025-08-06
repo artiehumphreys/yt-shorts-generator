@@ -17,3 +17,4 @@ class VideoProcessor:
         self.audio_codec = audio_codec
         self.pixel_fmt = pixel_fmt
         self.shortest = shortest
+        self.font_path = font_path
