@@ -21,4 +21,9 @@ class RedditClient:
         )
 
     def fetch_top_story(self, subreddit: str = "AmItheAsshole", limit: int = 20):
-        pass
+        sub = self.reddit.subreddit(subreddit)
+        for post in sub.hot(limit=limit):
+            if post.is_self and not post.over_18:
+                return {"title": post.title, "body": post.selftext}
+
+        raise LookupError("No suitable post found")

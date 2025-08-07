@@ -24,3 +24,7 @@ def test_fetch_top_story(mock_reddit):
     fake.title = "Test"
     fake.selftext = "Body"
     mock_reddit.return_value.subreddit.return_value.hot.return_value = [fake]
+
+    client = RedditClient()
+    story = client.fetch_top_story(limit=1)
+    assert story == {"title": "Test", "body": "Body"}
