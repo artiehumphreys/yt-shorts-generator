@@ -20,10 +20,20 @@ class RedditClient:
             user_agent=self.user_agent,
         )
 
-    def fetch_top_story(self, subreddit: str = "AmItheAsshole", limit: int = 20):
+    def fetch_top_story(
+        self, subreddit: str = "AmItheAsshole", limit: int = 20
+    ) -> dict[str, str]:
         sub = self.reddit.subreddit(subreddit)
         for post in sub.hot(limit=limit):
             if post.is_self and not post.over_18:
                 return {"title": post.title, "body": post.selftext}
 
         raise LookupError("No suitable post found")
+
+    def fetch_random_story(self, subreddit: str = "AmItheAsshole") -> dict[str, str]:
+        sub = self.reddit.subreddit(subreddit)
+        post = sub.random()
+        if post and post.is_self and not post.over_18:
+            return {"title": post.title, "body": post.selftext}
+
+        raise LookupError("No suitable random post found")
